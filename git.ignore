@@ -1,0 +1,2 @@
+one ; can give error in connecting port via env file 
+alway do port =3000   not port =3000;
