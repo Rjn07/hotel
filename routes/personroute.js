@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router(); 
 const app = express();
-const Menu = require('../Models/menu'); // Ensure correct model import
+// Ensure correct model import
 const Person = require('../Models/person');
 
 router.use(express.json()); // Middleware to parse JSON request body
@@ -20,21 +20,31 @@ router.post('/', async (req,res)=>{
         
     }
 })
-
-router.get('/',async(req,res)=>{
+router.get('/', async (req, res) => {
     try {
+        const persons = await Person.find(); // Fetch all persons
+        return res.status(200).json(persons);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching persons", error });
+    }
+});
+router.get('/:role', async (req, res) => {
+    try {
+        const work = req.params.role; // Get the role from URL parameter
 
-
-        
-        const persondata = await Person.find();
-        res.status(200).json(persondata);
-        
+        // Validate role
+        if (work === 'chef' || work === 'manager' || work === 'waiter') {
+            const persondata = await Person.find({role:work});
+            console.log(persondata);
+            return res.status(200).json(persondata);
+        } else {
+            return res.status(400).json({ message: "Invalid role provided" });
+        }
         
     } catch (error) {
-        res.status(500).json({ message: "Error fetching person ", error });
-        
+        res.status(500).json({ message: "Error fetching person data", error });
     }
-})
+});
 
 
 module.exports = router;

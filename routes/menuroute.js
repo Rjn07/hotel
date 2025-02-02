@@ -7,7 +7,7 @@ const Menu = require('../Models/menu');
 
 
 // Create a new menu item
-router.post('/menu', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const data = req.body; // Corrected: req.data → req.body
         const newMenu = new Menu(data); // Corrected: menubar → Menu
@@ -21,7 +21,7 @@ router.post('/menu', async (req, res) => {
 });
 
 
-router.get('/menu', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         // Fetch all menu items from the database
         const menuItems = await Menu.find();
