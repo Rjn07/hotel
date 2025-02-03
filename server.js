@@ -34,7 +34,7 @@ app.get('/', localAuth,(req, res) => {
     res.send("Hello sir, akhir kar aa hi gya hotel me");
 });
 
-app.use('/person',localAuth, personrouter);
+app.use('/person', personrouter);
 app.use('/menu',localAuth, menurouter);
 
 // ✅ Start Server
