@@ -52,6 +52,27 @@ router.post('/login',async (req,res)=>{
         
     }
 })
+
+router.get('/profile', jwtAuthMiddleware, async (req, res) => {
+    try {
+        const userData = req.user;  // Ensure correct variable name
+        console.log("user data:", userData);
+
+        const userId = userData.id;  // Use correct variable name
+        const user = await Person.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.status(200).json({ user });
+
+    } catch (error) {
+        console.error("Error fetching user profile:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
 router.get('/', async (req, res) => {
     try {
         const persons = await Person.find(); // Fetch all persons
